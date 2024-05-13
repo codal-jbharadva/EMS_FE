@@ -1,0 +1,19 @@
+.btn{
+    width: 168px;
+    height: 46px;
+    border-radius: 50px;
+    background-color:#F2F4FF;
+    border: 0px;
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 25px;
+    p{
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 19px;
+        color: #1D275F;
+    }
+
+}

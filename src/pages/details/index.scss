@@ -1,0 +1,20 @@
+.Details-header{
+    h1{
+        font-weight: 700;
+        line-height: 1.375;
+        font-size: 1.875rem;
+    }
+    a{
+        .image-header{
+            display: flex;
+        }
+        .image-section{
+            img{
+                width: 50px;
+                height: 50px;
+                object-fit: cover;
+                border-radius: 9999px;
+            }
+        }
+    }
+}

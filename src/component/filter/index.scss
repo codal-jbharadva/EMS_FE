@@ -1,0 +1,46 @@
+
+.filterHeader{
+    width: auto;
+    height: auto;
+    border-radius: 20px;
+    background: #242565;
+    box-shadow: 0px 10px 50px 0px #3D37F140;
+    color: white;
+    margin-top: -70px;
+    padding: 30px 50px 45px 50px;
+    div{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        // padding: 30px 50px;
+
+        .filterInput{
+            display: block;
+            label{
+                height: 100%;
+                font-size: 16px;
+                line-height: 21px;
+                // margin-bottom: 21px;
+                p{
+                    font-weight: 400px;
+                }
+            }
+            input{
+                background-color: transparent;
+                border: 0px;
+                border-bottom: 1px solid #7778B0;
+                outline: none;
+                &::placeholder{
+                    color: white;
+                    font-weight: 700;
+                    font-size: 22px;
+                    line-height: 29px;
+                    padding-bottom: 4px;
+                }
+            }
+    
+        }
+    }
+    
+}
+
