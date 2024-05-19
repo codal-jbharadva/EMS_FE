@@ -3,7 +3,7 @@ import "./index.scss"
 import ContentWrapper from "../../commoncomponent/contentWrapper/contentWrapper";
 import FilterButton from "../buttons/filterbuttons/Button";
 import Card from "../../commoncomponent/cardComponent/card";
-const arr:number[] = [1,2,3,4,5,6];
+const arr:[] = [1,2,3,4,5,6];
 const Upcoming:FC = ()=>{
     return(
         <ContentWrapper>
