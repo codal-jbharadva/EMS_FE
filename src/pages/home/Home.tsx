@@ -9,7 +9,6 @@ import Filter from '../../component/filter/Filter'
 
 const Home = ()=> {
     return (
-        // testing commnet
         <>
             <Header></Header>
             <Filter></Filter>
