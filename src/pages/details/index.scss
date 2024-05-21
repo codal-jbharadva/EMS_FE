@@ -5,17 +5,62 @@
         font-size: 1.875rem;
     }
     a{
+        all: unset;
         .image-header{
             display: flex;
+            align-items: center;
+            .image-section{
+                margin-right: 2rem;
+                img{
+                    width: 80px;
+                    height: 80px;
+                    object-fit: cover;
+                    border-radius: 9999px;
+                }
+            }
+            .image-content{
+                .name{
+                    font-weight: 800;
+                    line-height: 30px;
+                    font-size: 18px;
+                }
+            }
+        // adding the comment
         }
-        .image-section{
+    }
+
+}
+
+.detail-content{
+    display: flex;
+    gap: 4rem;
+    margin-top: 4rem;
+    .left-content{
+        width: 75%;
+        span{
+            width: 100%;
             img{
-                width: 50px;
-                height: 50px;
-                object-fit: cover;
-                border-radius: 9999px;
+                width: 100%;
             }
         }
-        // adding the comment
+        
     }
+    .right-content{
+        .content-card{
+            background-color: white;
+            box-shadow: 0px 18.95px 47.38px 0px #7773AA1A;
+            padding: 1.5rem;
+            border-radius: 30px;
+        }
+    }
+}
+
+.header{
+        font-weight: 700;
+        font-size: 25px;
+        line-height: 50px; 
+}
+
+.section{
+    padding-top: 3vh;
 }

@@ -2,7 +2,12 @@ import { FC } from "react";
 import "./index.scss"
 import ContentWrapper from "../../commoncomponent/contentWrapper/contentWrapper";
 
-const Optionfilter = ({name, placeholder})=>{
+type props = {
+    name: string,
+    placeholder: string
+}
+
+const Optionfilter = ({name, placeholder}:props)=>{
     return(
         <div className="filterInput">
             <label htmlFor="name"><p>{name}</p></label>
