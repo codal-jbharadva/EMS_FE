@@ -2,7 +2,7 @@ import { FC } from "react"
 import "./index.scss"
 import ContentWrapper from "../../commoncomponent/contentWrapper/contentWrapper";
 import Card from "../../commoncomponent/cardComponent/card";
-const arr:[] = [1,2,3];
+const arr:number[] = [1,2,3];
 const Blog:FC =()=>{
     return(
         <ContentWrapper>
