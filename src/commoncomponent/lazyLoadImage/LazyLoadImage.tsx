@@ -10,9 +10,10 @@ const Img = ({ src, className } : props) => {
     return (
         <LazyLoadImage
             className={className || ""}
-            alt=""
+            alt="This is Alt text"
             effect="blur"
             src={src}
+            onError={(e)=>console.log(e.target)}
         />
     );
 };

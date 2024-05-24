@@ -1,16 +1,26 @@
 .Details-header{
+    margin-top: 60px;
     h1{
+        all: unset;
         font-weight: 700;
         line-height: 1.375;
         font-size: 1.875rem;
     }
-    a{
+    h4{
         all: unset;
+        display: block;
+        font-weight: 400;
+        line-height: 1.375;
+        font-size: 1.2rem;
+    }
+    div{
+        margin-top: 0.5rem;
         .image-header{
             display: flex;
             align-items: center;
             .image-section{
                 margin-right: 2rem;
+                display: inline;
                 img{
                     width: 80px;
                     height: 80px;
@@ -19,6 +29,8 @@
                 }
             }
             .image-content{
+                display: flex;
+                flex-direction: column;
                 .name{
                     font-weight: 800;
                     line-height: 30px;
@@ -34,13 +46,14 @@
 .detail-content{
     display: flex;
     gap: 4rem;
-    margin-top: 4rem;
+    margin-top: 1rem;
     .left-content{
         width: 75%;
         span{
             width: 100%;
             img{
                 width: 100%;
+                max-height: 50vh;
             }
         }
         

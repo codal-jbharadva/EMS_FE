@@ -2,17 +2,18 @@
     position: sticky;
     top: 0px;
     background-color: transparent;
-    margin-top: -61px;
+    // margin-top: -61px;
+    background: linear-gradient(118.98deg, #ED4690 -2.11%, #5522CC 63.58%);
+    height: 61px;
+    z-index: 100;
 
 .navbar{
-    padding-top: 20px;
     display: flex;
     justify-content: space-between;
-    height: 41px;
-    width: 100%;
     align-items: center;
+    height: 100%;
+    width: 100%;
     position: sticky;
-    top: 20px;
     z-index: 20;
 
     .leftpanel{
