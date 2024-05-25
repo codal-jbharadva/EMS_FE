@@ -7,15 +7,18 @@ export const apiRequest = async (
     headers: Record<string, string> = { "Content-Type": "application/json" }
   ): Promise<any> => {
     try {
-      const response = await fetch(`http://localhost:3001/${url}`, {
+      const response = await fetch(`http://localhost:${BackendPort}/${url}`, {
         method,
         headers,
         body: method === "POST" ? JSON.stringify(body) : undefined,
       });
+      const responseData = await response.json();
+      console.log(responseData)
+      
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        return {success: false, data : responseData.message || `HTTP error! Status: ${response.status}`}
       }
-      return await response.json();
+      return {success:true, data: responseData};
     } catch (error) {
       console.error("Failed to fetch data:", error);
       throw error;

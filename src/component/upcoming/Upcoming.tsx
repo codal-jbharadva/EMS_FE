@@ -16,8 +16,13 @@ const Upcoming: FC = () => {
   useEffect(()=>{
     const getData = async ()=>{
       try{
-        const data = await apiRequest("event/","GET")
-        setEvents(data.events);
+        const response = await apiRequest("event/","GET")
+        if(!response.success){
+          console.log("error");
+        }
+        else{
+          setEvents(response.data.events);
+        }
       }
       catch(err){
         console.log(err);
@@ -30,9 +35,6 @@ const Upcoming: FC = () => {
   },[])
 
   return (
-    dataLoading ? (
-      <h1>Loading...</h1>
-    ) : (
       <ContentWrapper>
         <div className="top">
           <div className="header">
@@ -62,8 +64,6 @@ const Upcoming: FC = () => {
         )}
       </ContentWrapper>
     )
-  );
-  
 };
 
 export default Upcoming;

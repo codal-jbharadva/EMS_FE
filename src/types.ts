@@ -10,4 +10,9 @@ export interface CardProps {
         tagline: string,
         start_date: Date;
         end_date: Date,
+        address: string,
+}
+
+export interface response{
+        
 }
