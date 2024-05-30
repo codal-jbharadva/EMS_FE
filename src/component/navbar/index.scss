@@ -36,7 +36,7 @@
         }
     }
     }
-    .rightpanel{
+    .centerpanel{
         display: flex;
         justify-content: space-between;
         list-style-type: none;
@@ -49,25 +49,53 @@
             color: white;
             row-gap: 30px;
             text-decoration: none;
-            margin-right: 40px;
-            
+            margin-right: 40px;  
+            cursor: pointer;
         }
-        .linkbutton{
-            border-radius: 50px;
-            width: 102px;
-            height: 41px;
-            border: white 2px solid;
-            background-color: transparent;
-            color: white;
-            margin-left: 20px;
-            span{
-                padding: 20px;
-                font-weight: 500;
-                font-size: 16px;
-                line-height: 21px;
-            }
+    }
+    .rightpanel{
+        display: flex;
+        align-items: center;
 
+    .profile-dropdown {
+      .profile-icon {
+        background-color: white;
+        color: #007bff;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      .dropdown-menu {
+        right: 0;
+      }
+      
+    }
+    }
+    .linkbutton{
+        border-radius: 50px;
+        width: 102px;
+        height: 41px;
+        border: white 2px solid;
+        background-color: transparent;
+        color: white;
+        margin-left: 20px;
+        &:hover{
+            cursor: pointer;
+            background-color: #F5167E;
+        }
+        span{
+            padding: 20px;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 21px;
         }
     }
 }
 }
+

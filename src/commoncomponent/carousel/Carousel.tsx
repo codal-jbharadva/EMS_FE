@@ -22,7 +22,7 @@ function Carousel({images}:props) {
 
     setTimeout(()=>{
         setActiveImage((prevIndex) =>  (prevIndex + 1) % images.length)
-    }, 1000)
+    }, 5000)
 
     return (
         <div className='carousel'>

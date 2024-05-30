@@ -1,69 +1,124 @@
 import React, { FC, useEffect, useState } from "react";
 import "./index.scss";
 import ContentWrapper from "../../commoncomponent/contentWrapper/contentWrapper";
-import FilterButton from "../buttons/filterbuttons/Button";
 import Card from "../../commoncomponent/cardComponent/card";
 import { apiRequest } from "../../utils/ApicallUtil";
 import { useNavigate } from "react-router-dom";
 import { CardProps } from "../../types";
+import Select from "react-select";
 
 const Upcoming: FC = () => {
+  const dateOptions = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].map(option => ({ value: option, label: option }));
+  const eventOptions = ['Indoor', 'Outdoor', 'Sports', 'meetup', 'Social', 'Dinning'].map(option => ({ value: option, label: option }));
+
   const [events, setEvents] = useState<CardProps[]>([]);
   const [dataLoading, setDataLoading] = useState(true);
+  const [selectedDay, setSelectedDay] = useState<string[]>([]);
+  const [selectedEventType, setSelectedEventType] = useState<string[]>([]);
+  const [endIndex, setEndIndex] = useState<number>(6);
 
   const navigate = useNavigate();
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let url = `event/`;
+        const response = await apiRequest(url, "GET");
+        console.log(response);
+        if (!response.success) {
+          console.error("Error fetching events:", response.error);
+        } else {
+          let filteredEvents = response.data.events;
 
-  useEffect(()=>{
-    const getData = async ()=>{
-      try{
-        const response = await apiRequest("event/","GET")
-        if(!response.success){
-          console.log("error");
+          // Apply filtering if day or event type is selected
+          if (selectedDay.length > 0) {
+            filteredEvents = filteredEvents.filter((event: any) => {
+              const eventDay = new Date(event.start_date).toLocaleDateString('en-US', { weekday: 'long' });
+              return selectedDay.includes(eventDay);
+            });
+          }
+
+          if (selectedEventType.length > 0) {
+            filteredEvents = filteredEvents.filter((event: any) => {
+              return selectedEventType.includes(event.type);
+            });
+          }
+          setEvents(filteredEvents);
         }
-        else{
-          setEvents(response.data.events);
-        }
-      }
-      catch(err){
-        console.log(err);
-      }
-      finally{
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      } finally {
         setDataLoading(false);
       }
-    }
-    getData();
-  },[])
+    };
+    fetchData();
+  }, [selectedDay, selectedEventType]);
+
+
+  const handleDayChange = (selectedOptions: any) => {
+    setSelectedDay(selectedOptions.map((option: any) => option.value));
+  };
+
+  const handleEventTypeChange = (selectedOptions: any) => {
+    setSelectedEventType(selectedOptions.map((option: any) => option.value));
+  };
+  const loadEvents=()=>{
+    setEndIndex((prev)=> prev + 6);
+  }
 
   return (
-      <ContentWrapper>
-        <div className="top">
-          <div className="header">
-            Upcoming Events
+    <ContentWrapper>
+      <div className="top">
+        <div className="header">Upcoming Events</div>
+        <div className="btns">
+          <div className="filter-container">
+            <Select
+              isMulti
+              name="days"
+              options={dateOptions}
+              onChange={handleDayChange}
+              className="multi-select"
+              classNamePrefix="select"
+              placeholder="Select Day(s)"
+            />
           </div>
-          <div className="btns">
-            <FilterButton name="Weekdays" />
-            <FilterButton name="Event Type" />
-            <FilterButton name="Any Category" />
+          <div className="filter-container">
+            <Select
+              isMulti
+              name="eventTypes"
+              options={eventOptions}
+              onChange={handleEventTypeChange}
+              className="multi-select"
+              classNamePrefix="select"
+              placeholder="Select Event Type(s)"
+            />
           </div>
         </div>
-  
+      </div>
+      {events.length === 0 ? (
+        <div>
+          No event Found
+        </div>
+      ):(
         <div className="cards">
-          {events.slice(0, 6).map((event) => (
-            <div onClick={()=>navigate(`/details/${event.id}`)}>
-              <Card key={event.id} data={event}/>
-            </div>
-          ))}
-        </div>
-        
-        {events.length > 6 && (
-          <div className="btndiv">
-            <button className="morebtn">
-              <p>Load More</p>
-            </button>
+        {events.slice(0, endIndex).map((event) => (
+          <div key={event.id} onClick={() => navigate(`/details/${event.id}`)}>
+            <Card data={event} />
           </div>
-        )}
-      </ContentWrapper>
-    )
+        ))}
+      </div>
+      )}
+      
+
+      {events.length > 6 && endIndex < events.length && (
+        <div className="btndiv">
+          <button className="morebtn" onClick={loadEvents}>
+            <p>Load More</p>
+          </button>
+        </div>
+      )}
+    </ContentWrapper>
+  );
 };
 
 export default Upcoming;

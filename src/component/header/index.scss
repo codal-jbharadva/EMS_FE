@@ -27,7 +27,17 @@
         gap: 2rem;
         padding: 20px;
         margin: auto;
-        height: 100%;
+        height: calc(100% - 60px);
+
+        .hero-image{
+            height: 100%;
+            width: 80%;
+            img{
+                object-fit: cover;
+                height: 80%;
+                width: 100%;
+            }
+        }
 
         .content{
             text-align: center;

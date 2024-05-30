@@ -13,7 +13,7 @@ const Img = ({ src, className } : props) => {
             alt="This is Alt text"
             effect="blur"
             src={src}
-            onError={(e)=>console.log(e.target)}
+            // onError={(e)=>console.log(e.target)}
         />
     );
 };

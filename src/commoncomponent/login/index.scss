@@ -10,14 +10,14 @@
       text-align: center;
 
       .error-message {
-        height: 20px; // Adjust this value based on your design
+        height: 20px; 
         font-weight: 400;
         color: red;
-        visibility: hidden; // Hide the error message initially
+        visibility: hidden;
       }
   
       .error-message.visible {
-        visibility: visible; // Make the error message visible when there is an error
+        visibility: visible; 
       }
   
       h2 {

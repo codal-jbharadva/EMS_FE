@@ -13,6 +13,9 @@
     .btns{
         display: flex;
         gap: 20px;
+        .filter-container{
+            min-width: 200px;
+        }
     }
 }
 
@@ -21,7 +24,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     grid-auto-columns: minmax(auto, 350px);
-    grid-gap: 30px;
+    grid-gap: 20px; 
 }
 
 .btndiv{
@@ -34,6 +37,7 @@
         border: 1.5px solid #3D37F1;
         background-color: white;
         border-radius: 50px;
+        cursor: pointer;
     
         p{
             font-weight: 700;

@@ -28,11 +28,14 @@ footer{
                 border-radius: 50px;
                 height: 60px;
                 // width: 100%;
-                width: 12vw;
+                width: 10vw;
                 box-shadow: 0px 10px 50px 0px #3D37F140;
                 border: 0px;
                 p{
                    @include p();
+                }
+                &:hover{
+                    cursor: pointer;
                 }
             }
         }
@@ -58,6 +61,9 @@ footer{
                 p{  
                     @include p();
                     color: green; 
+                }
+                &:hover{
+                    cursor: pointer;
                 }
             }
         }  

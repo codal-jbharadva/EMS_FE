@@ -1,8 +1,15 @@
 import { FC } from "react";
 import "./index.scss";
 import ContentWrapper from "../../commoncomponent/contentWrapper/contentWrapper";
-
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { logout } from "../../redux/slices/userAuthSlice";
+import ProfileDropdown from "../../commoncomponent/profiledropdown/ProfileDropdown";
 const Navbar:FC= ()=>{
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const data = useAppSelector(state=>state.auth);
+
     return (
         <div className="parent">
         <ContentWrapper>
@@ -13,12 +20,20 @@ const Navbar:FC= ()=>{
                     </svg>
                     <div className="name">Event<span className="span">ick</span></div>
                 </div>
+                <ul className="centerpanel">
+                    <li className="link">Events</li>
+                    
+                    <li className="link">Blogs</li>
+                    <li className="link">Registered Events</li>
+                    {data?.authToken && <li className="link" onClick={()=>navigate("/addevent")}>Add Event</li>}
+                    {data?.authToken && <li className="link" onClick={()=>navigate("/addblog")}>Add Blog</li>}
+                </ul>
                 <ul className="rightpanel">
-                    <li className="link">Schedule</li>
-                    <li className="link">Speakers</li>
-                    <li className="link">Ticket</li>
-                    <li className="link">Contact</li>
-                    <button className="linkbutton"><span>Login</span></button>
+                    {!data?.authToken ? (
+                        <button className="linkbutton" onClick={()=>navigate("/login")}><span>Login</span></button>
+                    ):(
+                        <ProfileDropdown/>  
+                    )}
                 </ul>
             </nav>
         </ContentWrapper>
