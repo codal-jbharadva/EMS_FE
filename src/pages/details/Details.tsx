@@ -1,22 +1,19 @@
-import ContentWrapper from '../../commoncomponent/contentWrapper/contentWrapper';
-import "./index.scss";
-import { MdPlace } from "react-icons/md";
-import { IoTimeOutline } from "react-icons/io5";
-import Img from '../../commoncomponent/lazyLoadImage/LazyLoadImage';
-import Footer from '../../component/detailsFooter/Footer';
-import Images from '../../component/detailsImages/Images';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { apiRequest } from '../../utils/ApicallUtil';
-import RegistrationForm from '../../component/registrationForm/Register';
-import { CardProps } from '../../types';
 import moment from 'moment';
 import { useAppSelector } from '../../hooks/reduxHooks';
-
-import DOMPurify from 'dompurify';
+import { apiRequest } from '../../utils/ApicallUtil';
+import ContentWrapper from '../../commoncomponent/contentWrapper/contentWrapper';
+import { MdPlace } from 'react-icons/md';
+import { IoTimeOutline } from 'react-icons/io5';
+import Img from '../../commoncomponent/lazyLoadImage/LazyLoadImage';
+import Footer from '../../component/detailsFooter/Footer';
+import RegistrationForm from '../../component/registrationForm/Register';
+import { CardProps } from '../../types';
+import "./index.scss";
+import Images from '../../component/detailsImages/Images';
 
 function Details() {
-    const stateData = useAppSelector(state => state.auth);
     const { id } = useParams<{ id: string }>();
     const [data, setData] = useState<CardProps | null>(null);
     const [dataLoading, setDataLoading] = useState(true);
@@ -24,18 +21,26 @@ function Details() {
     const [endDateTime, setEndDateTime] = useState<{ date: string, time: string } | null>(null);
     const [registerForm, setRegisterForm] = useState(false);
     const [description, setDescription] = useState<string>("");
+    const [userData, setUserData] = useState<any>();
 
     const updateRegistrationForm = (flag: boolean) => {
         setRegisterForm(flag);
     };
 
+    useEffect(()=>{
+        window.scrollTo(0,0);
+    }, [])
+
     useEffect(() => {
         const getData = async () => {
             try {
+                setDataLoading(true);
                 const response = await apiRequest(`event/${id}`, "GET");
-                console.log(response)
+                console.log(response.data.data)
                 setData(response.data.data);
                 setDescription(response.data.data.description);
+                const userResponse = await apiRequest(`user/${response.data.data.admin_id}`, "GET");
+                setUserData(userResponse.data.data);
             } catch (err) {
                 console.error(err);
             } finally {
@@ -59,22 +64,45 @@ function Details() {
     }, [data?.start_date, data?.end_date]);
 
     return (
-        dataLoading ? (
-            <div className='loadingIcon'>Loading...</div>
-        ) : (
-            <>
-                <ContentWrapper>
+        <ContentWrapper>
+            {dataLoading ? (
+                <>
+                    <div className='Details-header skeleton-header'>
+                        <div className='skeleton skeleton-title'></div>
+                        <div className='skeleton skeleton-subtitle'></div>
+                        <div className='skeleton-image-header'>
+                            <div className='skeleton skeleton-image'></div>
+                            <div className='skeleton-image-content'>
+                                <div className='skeleton skeleton-hosted-by'></div>
+                                <div className='skeleton skeleton-name'></div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div className='detail-content skeleton-detail-content'>
+                        <div className='skeleton-left-content'>
+                            <div className='skeleton skeleton-img'></div>
+                            <div className='skeleton skeleton-section'></div>
+                            <div className='skeleton skeleton-section'></div>
+                        </div>
+                        <div className='skeleton-right-content'>
+                            <div className='skeleton skeleton-card'></div>
+                        </div>
+                    </div>
+                </>
+            ) : (
+                <>
                     <div className={`Details-header ${registerForm ? 'blurred' : ''}`}>
                         <h1>{data?.name}</h1>
                         <h4>{data?.tagline}</h4>
                         <div data-event-label="Hosted By">
                             <div className='image-header'>
                                 <div className='image-section'>
-                                    {/* Placeholder for image */}
+                                    <img src={userData?.profilePhoto} alt="" />
                                 </div>
                                 <div className='image-content'>
                                     <div>Hosted By</div>
-                                    <div className='name'>jayesh</div>
+                                    <div className='name'>{userData?.name}</div>
                                 </div>
                             </div>
                         </div>
@@ -82,13 +110,13 @@ function Details() {
                     <hr />
                     <div className={`detail-content ${registerForm ? 'blurred' : ''}`}>
                         <div className='left-content'>
-                            <Img src={data?.header_img} className=''></Img>
+                            <Img src={data?.header_img} alt="This is header alt imagec" className=''></Img>
                             <div className='section'>
                                 <div className='header'>Details</div>
                                 <div dangerouslySetInnerHTML={{ __html: description }} />
                             </div>
                             <div className='section'>
-                                {/* <Images images = {data?.}/> */}
+                                <Images images = {data?.images}/>
                             </div>
                         </div>
                         <div className='right-content'>
@@ -115,15 +143,15 @@ function Details() {
                             </div>
                         </div>
                     </div>
-                </ContentWrapper>
-                {registerForm && (
-                    <div className="modal">
-                        <RegistrationForm fee={data?.registration_fee} updateRegistrationForm={updateRegistrationForm}/>
-                    </div>
-                )}
-                <Footer data={data} startDate={startDateTime} updateRegistrationForm={updateRegistrationForm} />
-            </>
-        )
+                </>
+            )}
+            {registerForm && (
+                <div className="modal">
+                    <RegistrationForm fee={data?.registration_fee} updateRegistrationForm={updateRegistrationForm} data= {data}/>
+                </div>
+            )}
+            <Footer data={data} startDate={startDateTime} updateRegistrationForm={updateRegistrationForm} />
+        </ContentWrapper>
     );
 }
 

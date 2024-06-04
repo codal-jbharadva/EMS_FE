@@ -1,11 +1,11 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import RTE from '../../commoncomponent/RTE/RTE';
 import "./index.scss";
 import { apiRequest } from '../../utils/ApicallUtil';
 import { useAppSelector } from '../../hooks/reduxHooks';
 import { useNavigate } from 'react-router-dom';
+import Loader from '../../commoncomponent/loader/Loader';
 
 interface AddEventProps {}
 
@@ -13,16 +13,14 @@ const eventTypes = ['Indoor', 'Outdoor', 'Sports', 'meetup', 'Social', 'Dinning'
 
 const AddEvent: React.FC<AddEventProps> = () => {
   const navigate = useNavigate();
-
-  const {authToken} = useAppSelector(state=>state.auth);
-
+  const { authToken } = useAppSelector(state => state.auth);
   const { control, handleSubmit, getValues } = useForm();
   const [formData, setFormData] = useState({
     name: '',
     tagline: '',
     details: '',
     registrationFee: '',
-    type:'',
+    type: '',
     place: '',
     address: '',
     startDate: '',
@@ -33,6 +31,7 @@ const AddEvent: React.FC<AddEventProps> = () => {
   });
 
   const [selectedEventType, setSelectedEventType] = useState<string>();
+  const [loader, setLoader] = useState(false);
 
   const handleNext = () => {
     setFormData({ ...formData, currentSection: formData.currentSection + 1 });
@@ -57,7 +56,7 @@ const AddEvent: React.FC<AddEventProps> = () => {
     setFormData({ ...formData, [name]: files ? Array.from(files) : [] });
   };
 
-  const handleEventTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleEventTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedEventType(e.target.value);
     setFormData({ ...formData, type: e.target.value });
   };
@@ -70,19 +69,19 @@ const AddEvent: React.FC<AddEventProps> = () => {
             <h2>Basic Information</h2>
             <div className="input-group">
               <label htmlFor="name">Name</label>
-              <input type="text" name="name" value={formData.name} onChange={handleChange} />
+              <input type="text" name="name" value={formData.name} onChange={handleChange} required />
             </div>
             <div className="input-group">
               <label htmlFor="tagline">Tagline</label>
-              <input type="text" name="tagline" value={formData.tagline} onChange={handleChange} />
+              <input type="text" name="tagline" value={formData.tagline} onChange={handleChange} required />
             </div>
             <div className="input-group">
-              <label htmlFor="tagline">Event Type</label>
-              <select name="type" value={selectedEventType} onChange={handleEventTypeChange}>
-                  {eventTypes.map(eventType => (
-              <option key={eventType} value={eventType}>{eventType}</option>
-            ))}
-          </select>
+              <label htmlFor="type">Event Type</label>
+              <select name="type" value={selectedEventType} onChange={handleEventTypeChange} required>
+                {eventTypes.map(eventType => (
+                  <option key={eventType} value={eventType}>{eventType}</option>
+                ))}
+              </select>
             </div>
             <button onClick={handleNext}>Next</button>
           </div>
@@ -96,7 +95,7 @@ const AddEvent: React.FC<AddEventProps> = () => {
             </div>
             <div className="input-group">
               <label htmlFor="registrationFee">Registration Fee</label>
-              <input type="number" name="registrationFee" value={formData.registrationFee} onChange={handleChange} />
+              <input type="number" name="registrationFee" value={formData.registrationFee} onChange={handleChange} required />
             </div>
             <div className='btn-div'>
               <button onClick={handlePrev}>Previous</button>
@@ -110,19 +109,19 @@ const AddEvent: React.FC<AddEventProps> = () => {
             <h2>Location and Timing</h2>
             <div className="input-group">
               <label htmlFor="place">Place</label>
-              <input type="text" name="place" value={formData.place} onChange={handleChange} />
+              <input type="text" name="place" value={formData.place} onChange={handleChange} required />
             </div>
             <div className="input-group">
               <label htmlFor="address">Address</label>
-              <input type="text" name="address" value={formData.address} onChange={handleChange} />
+              <input type="text" name="address" value={formData.address} onChange={handleChange} required />
             </div>
             <div className="input-group">
               <label htmlFor="startDate">Start Date</label>
-              <input type="datetime-local" name="startDate" value={formData.startDate} onChange={handleChange} />
+              <input type="datetime-local" name="startDate" value={formData.startDate} onChange={handleChange} required />
             </div>
             <div className="input-group">
               <label htmlFor="endDate">End Date</label>
-              <input type="datetime-local" name="endDate" value={formData.endDate} onChange={handleChange} />
+              <input type="datetime-local" name="endDate" value={formData.endDate} onChange={handleChange} required />
             </div>
             <div className='btn-div'>
               <button onClick={handlePrev}>Previous</button>
@@ -136,11 +135,11 @@ const AddEvent: React.FC<AddEventProps> = () => {
             <h2>Images and Registration</h2>
             <div className="input-group">
               <label htmlFor="header_image">Header Image</label>
-              <input type="file" name="header_image" onChange={handleFileChange} />
+              <input type="file" name="header_image" onChange={handleFileChange} required />
             </div>
             <div className="input-group">
               <label htmlFor="images">Other Images</label>
-              <input type="file" name="images" multiple onChange={handleMultipleFileChange} />
+              <input type="file" name="images" multiple onChange={handleMultipleFileChange} required />
             </div>
             <div className='btn-div'>
               <button onClick={handlePrev}>Previous</button>
@@ -169,29 +168,37 @@ const AddEvent: React.FC<AddEventProps> = () => {
 
     // Append files
     if (formData.header_image) {
-      console.log(formData.header_image)
+      console.log(formData.header_image);
       formDataToSend.append('header_image', formData.header_image);
     }
 
     if (formData.images.length > 0) {
       formData.images.forEach((file: File) => {
-        formDataToSend.append(`images`, file);
+        formDataToSend.append('images', file);
       });
     }
 
     // Make the API request
     try {
-      const response = await apiRequest('event/add', 'POST', formDataToSend, {authToken: authToken, isFile: true } );
-      if(response.status){
-        navigate('/')
+      setLoader(true);
+      const response = await apiRequest('event/add', 'POST', formDataToSend, { authToken: authToken, isFile: true });
+      if (response.success) {
+        navigate('/');
       }
     } catch (error) {
       console.error('Error:', error);
+    } finally {
+      setLoader(false);
     }
   };
 
   return (
     <div>
+      {loader && (
+        <div className='loader-icon'>
+          <Loader />
+        </div>
+      )}
       <h1 className='header-add'>Add Event Form</h1>
       <form className="add-event-form" onSubmit={handleSubmit(onSubmit)}>
         {renderSection()}
@@ -200,4 +207,4 @@ const AddEvent: React.FC<AddEventProps> = () => {
   );
 };
 
-export default AddEvent;
+export default AddEvent

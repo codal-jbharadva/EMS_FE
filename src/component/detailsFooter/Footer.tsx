@@ -29,7 +29,7 @@ function Footer({ data, startDate, updateRegistrationForm }: FooterProps) {
     return (
         <footer>
             <ContentWrapper>
-                <div className="footer-content">
+                <div className={`footer-content ${data?.completed === 1 ? "": "header-completed" }`}>
                     <div className='footer-left'>
                         <div className="footertime">{startDate?.date}</div>
                         <div className="footername">{data?.name}</div>
@@ -44,7 +44,7 @@ function Footer({ data, startDate, updateRegistrationForm }: FooterProps) {
                             ) : "FREE"}
                         </div>
                         <div><button className='footer-share-btn'><p>Share <LuShare /></p></button></div>
-                        <div><button className='footer-btn' onClick={handleRegister}><p>Register</p></button></div>
+                        <div><button className={`footer-btn ${data?.completed === 0 ? "": "completed" }`} onClick={handleRegister}><p>{data?.completed === 0 ? "Register": "Ended"}</p></button></div>
                     </div>
                 </div>
             </ContentWrapper>

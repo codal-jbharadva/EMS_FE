@@ -12,6 +12,7 @@ import { useAppSelector } from './hooks/reduxHooks';
 import React from 'react';
 import NotAuthorized from './commoncomponent/notAuthorized/NotAuthprized';
 import BlogDetails from './component/blogDetails/BlogDetails';
+import EventList from './component/eventlist/EventList';
 
 // Define the route configuration
 interface AppRoute extends RouteProps {
@@ -37,7 +38,8 @@ const routes: AppRoute[] = [
   { path: '/addblog', element: <AddBlog/>, isAdminOnly: true},
   { path: '/signup', element: <SignUpForm /> },
   { path: '/not-authorized', element: <NotAuthorized /> },
-  { path: '/blogdetail/:id', element:<BlogDetails/>}
+  { path: '/blogdetail/:id', element:<BlogDetails/>},
+  {path: '/events', element:<EventList/>}
 ];
 
 const App: React.FC = () => {

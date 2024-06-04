@@ -13,7 +13,6 @@ const Blog:FC =()=>{
         async function fetchData(){
             try{
                 const response = await apiRequest('blog/',"GET");
-                console.log(response.data)
                 setBlogs(response.data.data)
             }
             catch(err){
@@ -26,7 +25,7 @@ const Blog:FC =()=>{
         <ContentWrapper>
             <div className="blog">
                 <header>Blog</header>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium laborum quae.</p>
+                <p>Here are some of the amazing blogs written by EventTick community.</p>
                 {!blogs? (
                     <div>
                         No Blogs Found

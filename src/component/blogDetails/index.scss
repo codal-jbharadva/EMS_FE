@@ -1,44 +1,164 @@
-.blogdetail-header{
+/* index.scss */
+.blogdetail-header {
     display: flex;
     height: 50vh;
     align-items: center;
     gap: 2vw;
+    margin-top: 5vh;
 
-    .header-left{
-        width:30%;
+    .header-left {
+        width: 30%;
         padding: auto;
-        .blog-title{
+
+        .blog-title {
             line-height: 36px;
             font-size: 28px;
             font-weight: 700;
-        }  
-        .blog-description{
+        }
+        .blog-description {
             line-height: 22px;
         }
     }
-    .header-right{
+    .header-right {
         width: 70%;
         height: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
-        img{
-            object-fit: contain;
-            height: 100%;
+
+        span {
             width: 100%;
+            height: 100%;
         }
     }
-
 }
-.blogDetail-content{
+
+.blogDetail-content {
+    margin-top: 5vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    div {
+        width: 70%;
+        font-size: 18px;
+        line-height: 32px;
+    }
+}
+
+.userblogdetail {
+    width: 70%;
+    margin: auto;
+    height: 200px;
+    border: 2px solid black;
+    display: flex;
+
+    .userimage {
+        height: 60%;
+        width: 15%;
+        margin: 20px;
+
+        img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    }
+    .usercontent {
+        width: 90%;
+
+        h2 {
+            color: rgb(168, 25, 46);
+        }
+    }
+}
+
+/* Skeleton loading styles */
+.skeleton {
+    background: #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.skeleton-header {
+    display: flex;
+    height: 50vh;
+    align-items: center;
+    gap: 2vw;
+    margin-top: 5vh;
+
+    .skeleton-left {
+        width: 30%;
+        padding: auto;
+
+        .skeleton-title {
+            width: 80%;
+            height: 36px;
+        }
+        .skeleton-description {
+            width: 100%;
+            height: 22px;
+        }
+    }
+    .skeleton-right {
+        width: 70%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .skeleton-image {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+.skeleton-content {
+    min-height: 70vh;
     margin-top: 3vh;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    div{
+
+    .skeleton-text {
         width: 70%;
-        font-size: 18px;
+        height: 18px;
         line-height: 32px;
+    }
+}
+
+.skeleton-userdetail {
+    width: 70%;
+    margin: auto;
+    height: 200px;
+    border: 2px solid #ddd;
+    display: flex;
+
+    .skeleton-userimage {
+        height: 60%;
+        width: 15%;
+        margin: 20px;
+
+        .skeleton-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+    }
+    .skeleton-usercontent {
+        width: 90%;
+
+        .skeleton-username {
+            width: 30%;
+            height: 22px;
+        }
+        .skeleton-userdesc {
+            width: 80%;
+            height: 18px;
+        }
     }
 }

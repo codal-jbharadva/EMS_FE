@@ -51,6 +51,8 @@
         padding: 10px 0;
         border: 1px solid #ddd;
         border-radius: 5px;
+        font-size: 15px;
+        padding-left: 10px;
       }
   
       .forgot-password {
@@ -88,9 +90,10 @@
       font-weight: 700;
 
   
-    //   &:hover {
-    //     background-color: #e6004c;
-    //   }
+      &:hover {
+        opacity: 0.9;
+        transition: all 1s;
+      }
     }
   
     .social-login {

@@ -68,7 +68,7 @@ const AddBlog: React.FC<AddBlogProps> = () => {
           <h2>Blog Information</h2>
           <div className="input-group">
             <label htmlFor="title">Title</label>
-            <input type="text" name="title" value={formData.title} onChange={handleChange} />
+            <input type="text" name="title" value={formData.title} onChange={handleChange} required/>
           </div>
           <div className="input-group">
             <label htmlFor="tags">Slug</label>
@@ -79,14 +79,14 @@ const AddBlog: React.FC<AddBlogProps> = () => {
           <h2>Blog Content</h2>
           <div className="input-group">
             <label htmlFor="description">Short Description</label>
-            <input type="text" name="description" value={formData.description} onChange={handleChange} />
+            <input type="text" name="description" value={formData.description} onChange={handleChange} required/>
           </div>
           <div className="input-group">
             <RTE label="Content" name="content" control={control} defaultValue={getValues("content")} />
           </div>
           <div className="input-group">
             <label htmlFor="coverImage">Cover Image</label>
-            <input type="file" name="coverImage" onChange={handleFileChange} />
+            <input type="file" name="coverImage" onChange={handleFileChange} required/>
           </div>
           <button type='submit'>Submit</button>
         </div>

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import  { FC, useEffect, useState } from "react";
 import "./index.scss";
 import ContentWrapper from "../../commoncomponent/contentWrapper/contentWrapper";
 import Card from "../../commoncomponent/cardComponent/card";
@@ -12,7 +12,7 @@ const Upcoming: FC = () => {
   const eventOptions = ['Indoor', 'Outdoor', 'Sports', 'meetup', 'Social', 'Dinning'].map(option => ({ value: option, label: option }));
 
   const [events, setEvents] = useState<CardProps[]>([]);
-  const [dataLoading, setDataLoading] = useState(true);
+  const [dataLoading, setDataLoading] = useState(false);
   const [selectedDay, setSelectedDay] = useState<string[]>([]);
   const [selectedEventType, setSelectedEventType] = useState<string[]>([]);
   const [endIndex, setEndIndex] = useState<number>(6);
@@ -21,16 +21,20 @@ const Upcoming: FC = () => {
   
   useEffect(() => {
     const fetchData = async () => {
+      setDataLoading(true);
       try {
         let url = `event/`;
         const response = await apiRequest(url, "GET");
-        console.log(response);
         if (!response.success) {
           console.error("Error fetching events:", response.error);
         } else {
-          let filteredEvents = response.data.events;
+          let responseEvents = response.data.events;
+          let filteredEvents = responseEvents.map((event : CardProps) => {
+            const today = new Date();
+            const eventDay = new Date(event.start_date);
+            return eventDay > today ? event : undefined;
+        }).filter((event : CardProps) => event !== undefined);
 
-          // Apply filtering if day or event type is selected
           if (selectedDay.length > 0) {
             filteredEvents = filteredEvents.filter((event: any) => {
               const eventDay = new Date(event.start_date).toLocaleDateString('en-US', { weekday: 'long' });
@@ -65,6 +69,9 @@ const Upcoming: FC = () => {
   const loadEvents=()=>{
     setEndIndex((prev)=> prev + 6);
   }
+  dataLoading && (
+    <div>Data Loading</div>
+  )
 
   return (
     <ContentWrapper>
@@ -102,7 +109,7 @@ const Upcoming: FC = () => {
       ):(
         <div className="cards">
         {events.slice(0, endIndex).map((event) => (
-          <div key={event.id} onClick={() => navigate(`/details/${event.id}`)}>
+          <div key={event.id}>
             <Card data={event} />
           </div>
         ))}

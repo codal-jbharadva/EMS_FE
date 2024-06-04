@@ -1,52 +1,63 @@
-// src/ProfileDropdown.scss
 .profile-dropdown {
-    position: relative;
-    display: inline-block;
-  
-    .profile-icon {
-      background-color: #007bff;
-      color: white;
-      padding: 10px;
-      border-radius: 50%;
+  position: relative;
+  display: inline-block;
+
+  .profile-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white; /* Set the icon color to white */
+    cursor: pointer;
+    font-size: 24px; /* Adjust the font size if needed */
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    right: 0;
+    background-color: #5522CC;
+    border: 1px solid #ED4690;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    width: 200px;
+    z-index: 1000;
+    animation: fadeIn 0.3s;
+
+    .user-info {
+      padding: 15px;
+      border-bottom: 1px solid #ED4690;
       cursor: pointer;
-      font-size: 16px;
-      text-align: center;
-      width: 40px;
-      height: 40px;
-    }
-  
-    .dropdown-menu {
-      position: absolute;
-      right: 0;
-      background-color: white;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      margin-top: 10px;
-      width: 200px;
-      z-index: 1000;
-  
-      .user-info {
-        padding: 15px;
-        border-bottom: 1px solid #ddd;
-  
-        p {
-          margin: 5px 0;
-          &:first-child {
-            font-weight: bold;
-          }
-        }
+      &:hover {
+        background-color: #ED4690;
+        color: white;
       }
-  
-      .logout {
-        padding: 10px;
-        text-align: center;
-        color: #007bff;
-        cursor: pointer;
-        &:hover {
-          background-color: #f8f9fa;
-        }
+
+      p {
+        margin: 0;
+        font-weight: bold;
+        color: white;
+      }
+    }
+
+    .logout {
+      padding: 10px;
+      text-align: center;
+      color: white;
+      cursor: pointer;
+      &:hover {
+        background-color: #ED4690;
       }
     }
   }
-  
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}

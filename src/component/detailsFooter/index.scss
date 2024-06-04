@@ -8,6 +8,7 @@
 }
 
 footer{
+    
     position: sticky;
     bottom: 0px;
     background-color: rgb(246, 247, 248);
@@ -36,6 +37,9 @@ footer{
                 }
                 &:hover{
                     cursor: pointer;
+                }
+                &.completed{
+                    background: red;
                 }
             }
         }
@@ -83,3 +87,4 @@ footer{
         }
     }
 }
+

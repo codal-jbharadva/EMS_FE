@@ -1,0 +1,19 @@
+/* index.scss */
+
+.event-list {
+    padding: 20px;
+
+    h2 {
+        margin-top: 40px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .event-grid {
+        margin-top: 7vh;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        grid-auto-columns: minmax(auto, 350px);
+        grid-gap: 20px; 
+    }
+}

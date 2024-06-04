@@ -1,18 +1,28 @@
-import { FormEvent, useState } from 'react';
+import React, { FormEvent, useState, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiRequest } from '../../utils/ApicallUtil';
+import ReactCrop, { Crop, PixelCrop, centerCrop, convertToPercentCrop, convertToPixelCrop, makeAspectCrop } from 'react-image-crop';
+import 'react-image-crop/dist/ReactCrop.css';
 import "./index.scss";
+import setCanvasPreview from "../../utils/setCanvasPreview"
+const MIN_DIMENTION = 130;
+const ASPECT_RETIO = 1;
 
 const SignUpForm = () => {
+  const imgRef = useRef(null);
+  const previewRef = useRef(null);
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [profilePhoto, setProfilePhoto] = useState<File | null>(null);
+  const [croppedPhoto, setCroppedPhoto] = useState<File | null>(null);
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [number, setNumber] = useState<string>('');
-  const [role, setRole] = useState<string>('student');
+  const [role, setRole] = useState<string>('user');
   const [isError, setIsError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string>();
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [crop, setCrop] = useState<Crop>();
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
@@ -27,18 +37,21 @@ const SignUpForm = () => {
     const formData = new FormData();
     formData.append('name', name);
     formData.append('email', email);
-    if (profilePhoto) formData.append('profilePhoto', profilePhoto);
+    if (croppedPhoto){
+      console.log("hello")
+      formData.append('profilePhoto', croppedPhoto);
+    } 
     formData.append('password', password);
     formData.append('number', number);
     formData.append('role', role);
 
     try {
-        const response = await apiRequest(
-            "user/add",
-            "POST",
-            formData,
-            { isFile: true, isSignUp: true }
-          );
+      const response = await apiRequest(
+        "user/add",
+        "POST",
+        formData,
+        { isFile: true, isSignUp: true }
+      );
       if (!response.success) {
         setIsError(true);
         setErrorMessage(response.data);
@@ -49,6 +62,61 @@ const SignUpForm = () => {
       console.log(err);
     }
   };
+
+  const handleCropImage = () => {
+    if (imgRef.current && previewRef.current && crop) {
+      setCanvasPreview(imgRef.current, previewRef.current, convertToPixelCrop(crop, imgRef.current.width, imgRef.current.height));
+      const dataURL = previewRef.current.toDataURL('image/jpeg');
+      // Convert data URL to Blob
+      const byteString = atob(dataURL.split(',')[1]);
+      const ab = new ArrayBuffer(byteString.length);
+      const ia = new Uint8Array(ab);
+      for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+      const blob = new Blob([ab], { type: 'image/jpeg' });
+      const file = new File([blob], 'cropped.jpg', { type: 'image/jpeg' });
+      console.log(file);
+      setCroppedPhoto(file);
+    }
+  };
+
+  const handleImageSelection = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setProfilePhoto(file);
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setImageSrc(event.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+      console.log(reader)
+      setCroppedPhoto(null);
+    }
+  };
+
+  const onImageLoad = (e:React.ChangeEvent<HTMLImageElement>)=>{
+    const {width, height, naturalHeight, naturalWidth} = e.currentTarget;
+
+
+    if(naturalHeight < MIN_DIMENTION || naturalWidth < MIN_DIMENTION){
+      setErrorMessage("Image must be at least 130 X 130 Pixels.");
+      setImageSrc("");
+      return;
+    }
+
+    const cropWidthPercent = (MIN_DIMENTION / width) * 100;
+    const crop = makeAspectCrop({
+      unit:"%",
+      width: cropWidthPercent,
+      },
+        ASPECT_RETIO,
+        width,
+        height
+    );
+    const centeredCrop = centerCrop(crop, width, height);
+    setCrop(centeredCrop);
+  }
 
   return (
     <div className="login-form">
@@ -61,7 +129,7 @@ const SignUpForm = () => {
           Already have an account? <a href="/login">Log in</a>
         </p>
       </div>
-      <form onSubmit={handleSignUp}>
+      <form >
         <div className="input-group">
           <label htmlFor="name">Name</label>
           <input
@@ -87,9 +155,35 @@ const SignUpForm = () => {
           <input
             type="file"
             id="profilePhoto"
-            onChange={(e) => setProfilePhoto(e.target.files![0])}
+            onChange={handleImageSelection}
           />
         </div>
+        {imageSrc && (
+          <div className='cropImage'>
+            <ReactCrop
+            crop={crop}
+            circularCrop
+            keepSelection
+            aspect={ASPECT_RETIO}
+            minWidth={MIN_DIMENTION}
+            onChange={(PixelCrop, percentageCrop) => setCrop(percentageCrop)}
+          >
+            <img ref={imgRef} src={imageSrc} alt="" onLoad={onImageLoad}/>
+          </ReactCrop>
+          <button className='' onClick={handleCropImage}>Crop Image</button>
+          </div>
+        )}
+        {
+          crop && (
+            <canvas
+            ref={previewRef}
+            style={{
+              height:130,
+              width:130,
+              objectFit:"contain",
+            }}/>
+          )
+        }
         <div className="input-group">
           <label htmlFor="password">Password</label>
           <input
@@ -131,7 +225,7 @@ const SignUpForm = () => {
               checked={role === 'user'}
               onChange={(e) => setRole(e.target.value)}
             />
-            <label htmlFor="student">User</label>
+            <label htmlFor="user">User</label>
             <input
               type="radio"
               id="admin"
@@ -143,7 +237,7 @@ const SignUpForm = () => {
             <label htmlFor="admin">Admin</label>
           </div>
         </div>
-        <button type="submit" className="login-button">Sign Up</button>
+        <button type="submit" className="login-button" onClick={handleSignUp}>Sign Up</button>
       </form>
     </div>
   );
