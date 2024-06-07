@@ -6,6 +6,9 @@
   gap: 10px;
   border-radius: 19px;
   // min-height: 400px;
+  &:hover{
+    cursor: pointer;
+  }
   overflow: hidden;
   .blogcard-header{
     img{

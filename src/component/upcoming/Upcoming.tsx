@@ -6,6 +6,7 @@ import { apiRequest } from "../../utils/ApicallUtil";
 import { useNavigate } from "react-router-dom";
 import { CardProps } from "../../types";
 import Select from "react-select";
+import Loader from "../../commoncomponent/loader/Loader";
 
 const Upcoming: FC = () => {
   const dateOptions = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].map(option => ({ value: option, label: option }));
@@ -69,9 +70,7 @@ const Upcoming: FC = () => {
   const loadEvents=()=>{
     setEndIndex((prev)=> prev + 6);
   }
-  dataLoading && (
-    <div>Data Loading</div>
-  )
+ 
 
   return (
     <ContentWrapper>
@@ -102,8 +101,14 @@ const Upcoming: FC = () => {
           </div>
         </div>
       </div>
-      {events.length === 0 ? (
-        <div>
+
+      <div className="maincontent">
+      {dataLoading ? (
+          <div className="noevent">
+            <Loader/>
+          </div>
+        ) : events.length === 0 ? (
+        <div className="noevent">
           No event Found
         </div>
       ):(
@@ -124,6 +129,7 @@ const Upcoming: FC = () => {
           </button>
         </div>
       )}
+  </div>
     </ContentWrapper>
   );
 };

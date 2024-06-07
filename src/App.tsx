@@ -13,6 +13,8 @@ import React from 'react';
 import NotAuthorized from './commoncomponent/notAuthorized/NotAuthprized';
 import BlogDetails from './component/blogDetails/BlogDetails';
 import EventList from './component/eventlist/EventList';
+import ForgotPasswordForm from './pages/forgotpassword/Forgot';
+import UpdatePasswordForm from './pages/resetpassword/ResetPassword';
 
 // Define the route configuration
 interface AppRoute extends RouteProps {
@@ -39,7 +41,9 @@ const routes: AppRoute[] = [
   { path: '/signup', element: <SignUpForm /> },
   { path: '/not-authorized', element: <NotAuthorized /> },
   { path: '/blogdetail/:id', element:<BlogDetails/>},
-  {path: '/events', element:<EventList/>}
+  { path: '/events', element:<EventList/>},
+  { path: '/forgot-password', element: <ForgotPasswordForm/>},
+  { path: '/reset-password/:token', element: <UpdatePasswordForm/>}
 ];
 
 const App: React.FC = () => {

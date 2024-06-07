@@ -5,6 +5,7 @@ import ReactCrop, { Crop, PixelCrop, centerCrop, convertToPercentCrop, convertTo
 import 'react-image-crop/dist/ReactCrop.css';
 import "./index.scss";
 import setCanvasPreview from "../../utils/setCanvasPreview"
+import Loader from '../../commoncomponent/loader/Loader';
 const MIN_DIMENTION = 130;
 const ASPECT_RETIO = 1;
 
@@ -23,6 +24,7 @@ const SignUpForm = () => {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [crop, setCrop] = useState<Crop>();
   const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const [dataLoading, setDataLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -38,7 +40,6 @@ const SignUpForm = () => {
     formData.append('name', name);
     formData.append('email', email);
     if (croppedPhoto){
-      console.log("hello")
       formData.append('profilePhoto', croppedPhoto);
     } 
     formData.append('password', password);
@@ -46,6 +47,7 @@ const SignUpForm = () => {
     formData.append('role', role);
 
     try {
+      setDataLoading(true);
       const response = await apiRequest(
         "user/add",
         "POST",
@@ -61,11 +63,16 @@ const SignUpForm = () => {
     } catch (err) {
       console.log(err);
     }
+    finally{
+      setDataLoading(false);
+    }
   };
 
   const handleCropImage = () => {
     if (imgRef.current && previewRef.current && crop) {
+      // @ts-ignore
       setCanvasPreview(imgRef.current, previewRef.current, convertToPixelCrop(crop, imgRef.current.width, imgRef.current.height));
+      // @ts-ignore
       const dataURL = previewRef.current.toDataURL('image/jpeg');
       // Convert data URL to Blob
       const byteString = atob(dataURL.split(',')[1]);
@@ -116,6 +123,14 @@ const SignUpForm = () => {
     );
     const centeredCrop = centerCrop(crop, width, height);
     setCrop(centeredCrop);
+  }
+
+  if(dataLoading){
+    return(
+      <div className='loader-icon'>
+        <Loader/>
+      </div>
+    )
   }
 
   return (
@@ -181,6 +196,7 @@ const SignUpForm = () => {
               height:130,
               width:130,
               objectFit:"contain",
+              borderRadius: "50%",
             }}/>
           )
         }

@@ -1,5 +1,5 @@
 .add-blog-form {
-    max-width: 40vw;
+    max-width: 60vw;
     margin: 5vh auto;
     padding: 2rem;
     border: 1px solid #ddd;
@@ -55,6 +55,30 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      font-weight: 700;
+      font-size: 40px;
+      line-height: 40px;
+      color: #242565;
+    }
+  }
+  .btnDiv{
+    display: flex;
+    justify-content: center;
+
+    button {
+      width: 30%;
+      padding: 10px;
+      background-color: #F5167E;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 700;
+  
+      &:hover {
+        background-color: #e6004c;
+      }
     }
   }
   

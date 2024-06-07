@@ -1,3 +1,4 @@
+import React from "react";
 import ContentWrapper from "../../commoncomponent/contentWrapper/contentWrapper";
 import { CardProps } from "../../types";
 import "./index.scss";
@@ -5,51 +6,63 @@ import { LuShare } from "react-icons/lu";
 import { FaRupeeSign } from "react-icons/fa";
 import { useAppSelector } from "../../hooks/reduxHooks";
 import { useNavigate } from "react-router-dom";
+
 interface FooterProps {
     data: CardProps;
     startDate: { date: string } | null;
     updateRegistrationForm: (flag: boolean) => void;
 }
 
-function Footer({ data, startDate, updateRegistrationForm }: FooterProps) {
-    const auth = useAppSelector(state=>state.auth);
-
+const Footer: React.FC<FooterProps> = ({ data, startDate, updateRegistrationForm }) => {
+    const auth = useAppSelector(state => state.auth);
     const navigate = useNavigate();
 
     const handleRegister = () => {
-        if(auth?.authToken){
+        if (auth?.authToken) {
             updateRegistrationForm(true);
-        }
-        else{
+        } else {
             updateRegistrationForm(true);
-            navigate("/login", {state:{from:`/details/${data.id}`}});
+            navigate("/login", { state: { from: `/details/${data.id}` } });
         }
     };
 
     return (
         <footer>
             <ContentWrapper>
-                <div className={`footer-content ${data?.completed === 1 ? "": "header-completed" }`}>
-                    <div className='footer-left'>
-                        <div className="footertime">{startDate?.date}</div>
-                        <div className="footername">{data?.name}</div>
+                <div className={`footer-content ${data?.completed === 1 ? "" : "header-completed"}`}>
+                    <div className="footer-left">
+                        <div className="footer-time">{startDate?.date}</div>
+                        <div className="footer-name">{data?.name}</div>
                     </div>
-                    <div className='footer-right'>
+                    <div className="footer-right">
                         <div>
                             {data?.registration_fee > 0 ? (
                                 <div className="fee">
-                                    <div>Registration FEE</div>
-                                    <div className="value"><span>{data?.registration_fee}<FaRupeeSign /></span></div>
+                                    <div>Registration Fee</div>
+                                    <div className="value">
+                                        <span>{data?.registration_fee}<FaRupeeSign /></span>
+                                    </div>
                                 </div>
                             ) : "FREE"}
                         </div>
-                        <div><button className='footer-share-btn'><p>Share <LuShare /></p></button></div>
-                        <div><button className={`footer-btn ${data?.completed === 0 ? "": "completed" }`} onClick={handleRegister}><p>{data?.completed === 0 ? "Register": "Ended"}</p></button></div>
+                        <div>
+                            <button className="footer-share-btn">
+                                <p>Share <LuShare /></p>
+                            </button>
+                        </div>
+                        <div>
+                            <button 
+                                className={`footer-btn ${data?.completed === 0 ? "" : "completed"}`} 
+                                onClick={handleRegister}
+                            >
+                                <p>{data?.completed === 0 ? "Register" : "Ended"}</p>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </ContentWrapper>
         </footer>
     );
-}
+};
 
 export default Footer;

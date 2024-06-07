@@ -4,6 +4,7 @@ import { IoMdClose } from "react-icons/io";
 import {loadStripe} from '@stripe/stripe-js';
 import { CardProps } from '../../types';
 import { apiRequest } from '../../utils/ApicallUtil';
+import { useAppSelector } from '../../hooks/reduxHooks';
 
 interface registrationFormProps{
   fee:number | undefined,
@@ -12,6 +13,8 @@ interface registrationFormProps{
 }
 
 const RegistrationForm = ({fee, updateRegistrationForm, data}:registrationFormProps) => {
+
+  const {authToken} = useAppSelector(state=>state.auth);
   console.log(data);
   const [formData, setFormData] = useState({
     firstName: '',
@@ -47,7 +50,7 @@ const RegistrationForm = ({fee, updateRegistrationForm, data}:registrationFormPr
       eventName: data?.name,
     }
 
-    const response = await apiRequest('stripe',"POST",body)
+    const response = await apiRequest('stripe',"POST",body, {authToken:authToken})
     console.log(response.data);
     const session = response.data;
     const result = stripe?.redirectToCheckout({

@@ -64,6 +64,7 @@ function Details() {
     }, [data?.start_date, data?.end_date]);
 
     return (
+        <>
         <ContentWrapper>
             {dataLoading ? (
                 <>
@@ -150,8 +151,9 @@ function Details() {
                     <RegistrationForm fee={data?.registration_fee} updateRegistrationForm={updateRegistrationForm} data= {data}/>
                 </div>
             )}
-            <Footer data={data} startDate={startDateTime} updateRegistrationForm={updateRegistrationForm} />
         </ContentWrapper>
+            <Footer data={data} startDate={startDateTime} updateRegistrationForm={updateRegistrationForm} />
+        </>
     );
 }
 

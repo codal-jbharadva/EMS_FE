@@ -26,8 +26,8 @@ const Navbar: FC = () => {
             <li className="link" onClick={() => navigate("/events")}>Events</li>
             <li className="link" onClick={() => navigate("/blogs")}>Blogs</li>
             <li className="link" onClick={() => navigate("/registered-events")}>Registered Events</li>
-            {data?.authToken && <li className="link" onClick={() => navigate("/addevent")}>Add Event</li>}
-            {data?.authToken && <li className="link" onClick={() => navigate("/addblog")}>Add Blog</li>}
+            {data?.isAdmin && <li className="link" onClick={() => navigate("/addevent")}>Add Event</li>}
+            {data?.isAdmin && <li className="link" onClick={() => navigate("/addblog")}>Add Blog</li>}
           </ul>
           <ul className="rightpanel">
             {!data?.authToken ? (

@@ -8,11 +8,13 @@ interface PostCardProps {
     id: string;
     title: string;
     description: string;
+    coverImage: string,
   };
   loading?: boolean;
 }
 
 const PostCard: React.FC<PostCardProps> = ({ data, loading }) => {
+  console.log(data);
   const navigate = useNavigate();
 
   if (loading) {
@@ -28,7 +30,7 @@ const PostCard: React.FC<PostCardProps> = ({ data, loading }) => {
 
   return (
     <div className='blogcard' onClick={() => navigate(`/blogdetail/${data?.id}`)}>
-      <div className='blogcard-header'><img src={image} alt="" /></div>
+      <div className='blogcard-header'><img src={data?.coverImage} alt="" /></div>
       <div className='blogcard-title'>{data?.title}</div>
       <div className='blogcard-description'>{data?.description}</div>
       <div className='blogcard-author'>Written by Jayesh Bharadva</div>

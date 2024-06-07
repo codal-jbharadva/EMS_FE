@@ -28,9 +28,19 @@ const EventList: React.FC = () => {
 
     const now = moment();
 
-    const upcomingEvents = events.filter(event => moment(event.start_date).isAfter(now));
-    const runningEvents = events.filter(event => moment(event.start_date).isBefore(now) && moment(event.end_date).isAfter(now));
-    const pastEvents = events.filter(event => moment(event.end_date).isBefore(now));
+    const upcomingEvents = events.filter(event => 
+        moment(event.start_date).isAfter(now) && event.iscomplete !== 1
+    );
+    
+    const runningEvents = events.filter(event => 
+        moment(event.start_date).isBefore(now) && 
+        moment(event.end_date).isAfter(now) && 
+        event.iscomplete !== 1
+    );
+    
+    const pastEvents = events.filter(event => 
+        moment(event.end_date).isBefore(now) || event.iscomplete === 1
+    );
 
     return (
         <div className="event-list">
