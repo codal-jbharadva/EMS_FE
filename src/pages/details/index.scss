@@ -1,13 +1,15 @@
 .Details-header{
-    margin-top: 60px;
+    margin-top: 3vh;
     h1{
         all: unset;
         font-weight: 700;
         line-height: 1.375;
         font-size: 1.875rem;
+        margin-bottom: 5px;
     }
     h4{
         all: unset;
+        // margin-top: 10px;
         display: block;
         font-weight: 400;
         line-height: 1.375;
@@ -16,24 +18,27 @@
     div{
         margin-top: 0.5rem;
         .image-header{
+            height: 8vh;
             display: flex;
             align-items: center;
             .image-section{
                 margin-right: 2rem;
-                display: inline;
+                height: 100%;
                 img{
-                    width: 80px;
-                    height: 80px;
-                    object-fit: cover;
-                    border-radius: 9999px;
-                }
+                    display: inline;
+                    height: inherit;
+                    object-fit: contain;
+                    border-radius: 50%;
+                }    
             }
             .image-content{
+                margin: 0;
                 display: flex;
                 flex-direction: column;
                 .name{
+                    margin: 0;
                     font-weight: 800;
-                    line-height: 30px;
+                    // line-height: 30px;
                     font-size: 18px;
                 }
             }
@@ -45,23 +50,24 @@
 
 .detail-content{
     display: flex;
-    gap: 4rem;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
+    justify-content: space-between;
     .left-content{
-        width: 75%;
+        width: 65%;
         span{
             width: 100%;
             img{
                 width: 100%;
-                max-height: 50vh;
+                max-height: 60  vh;
             }
         }
         
     }
     .right-content{
+        width: 30%;
         .content-card{
             background-color: white;
-            box-shadow: 0px 18.95px 47.38px 0px #7773AA1A;
+            box-shadow: 0px 18.95px 47.38px 0px #0e0d141a;
             padding: 1.5rem;
             border-radius: 30px;
         }
@@ -76,4 +82,102 @@
 
 .section{
     padding-top: 3vh;
+}
+
+/* index.scss */
+
+/* Skeleton styles */
+.skeleton {
+    background: #e0e0e0;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+.skeleton::before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, rgba(224, 224, 224, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(224, 224, 224, 0) 100%);
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.skeleton-header {
+    margin-top: 3vh;
+    .skeleton-title {
+        width: 60%;
+        height: 20px;
+        margin-bottom: 10px;
+    }
+    .skeleton-subtitle {
+        width: 40%;
+        height: 20px;
+        margin-top: 15px;
+    }
+}
+
+.skeleton-image-header {
+    height: 8vh;
+    display: flex;
+    align-items: center;
+    .skeleton-image {
+        width: 8vh;
+        height: 8vh;
+        border-radius: 50%;
+        margin-right: 2rem;
+    }
+    .skeleton-image-content {
+        display: flex;
+        flex-direction: column;
+        .skeleton-hosted-by, .skeleton-name {
+            height: 20px;
+            margin-bottom: 10px;
+        }
+        .skeleton-hosted-by {
+            width: 30%;
+        }
+        .skeleton-name {
+            width: 50%;
+        }
+    }
+}
+
+.skeleton-detail-content {
+    display: flex;
+    margin-top: 1.5rem;
+    justify-content: space-between;
+    .skeleton-left-content {
+        width: 60%;
+        .skeleton-img {
+            width: 100%;
+            height: 55vh;
+            margin-bottom: 10px;
+        }
+        .skeleton-section {
+            width: 100%;
+            height: 20px;
+            margin-bottom: 10px;
+        }
+    }
+    .skeleton-right-content {
+        width: 35%;
+        .skeleton-card {
+            width: 100%;
+            height: 200px;
+            border-radius: 30px;
+        }
+    }
 }
