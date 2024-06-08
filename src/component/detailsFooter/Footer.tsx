@@ -26,6 +26,26 @@ const Footer: React.FC<FooterProps> = ({ data, startDate, updateRegistrationForm
         }
     };
 
+    const currentDate = new Date();
+    const registrationStartDate = new Date(data?.registration_start_date);
+    const registrationEndDate = new Date(data?.registration_end_date);
+    const eventEndDate = new Date(data?.end_date);
+    console.log(registrationEndDate)
+    console.log(registrationStartDate)
+    console.log(eventEndDate)
+
+    let registrationStatus;
+    if (currentDate < registrationStartDate) {
+        registrationStatus = "Registration will open soon";
+    } else if (currentDate >= registrationStartDate && currentDate <= registrationEndDate) {
+        registrationStatus = "Register";
+    } else if (currentDate > registrationEndDate && currentDate <= eventEndDate) {
+        registrationStatus = "Event is closed";
+    } else if (currentDate > eventEndDate) {
+        registrationStatus = "Ended";
+    }
+    console.log(registrationStatus)
+
     return (
         <footer>
             <ContentWrapper>
@@ -51,11 +71,12 @@ const Footer: React.FC<FooterProps> = ({ data, startDate, updateRegistrationForm
                             </button>
                         </div>
                         <div>
-                            <button 
-                                className={`footer-btn ${data?.completed === 0 ? "" : "completed"}`} 
-                                onClick={handleRegister}
+                            <button
+                                className={`footer-btn ${registrationStatus === "Register" ? "" : "completed"}`}
+                                onClick={registrationStatus === "Register" ? handleRegister : undefined}
+                                disabled={registrationStatus !== "Register"}
                             >
-                                <p>{data?.completed === 0 ? "Register" : "Ended"}</p>
+                                <p>{registrationStatus}</p>
                             </button>
                         </div>
                     </div>

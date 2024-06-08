@@ -11,6 +11,8 @@ export interface CardProps {
         start_date: Date;
         end_date: Date,
         address: string,
+        registration_start_date: Date,
+        registration_end_date: Date,
 }
 
 export interface response{

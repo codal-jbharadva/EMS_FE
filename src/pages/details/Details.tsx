@@ -36,7 +36,6 @@ function Details() {
             try {
                 setDataLoading(true);
                 const response = await apiRequest(`event/${id}`, "GET");
-                console.log(response.data.data)
                 setData(response.data.data);
                 setDescription(response.data.data.description);
                 const userResponse = await apiRequest(`user/${response.data.data.admin_id}`, "GET");

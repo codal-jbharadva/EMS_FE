@@ -1,6 +1,17 @@
-.contentWrapper{
+.contentWrapper {
         width: 100%;
         max-width: 1200px;
-        margin: 0 auto;  
-        height: 100%; 
-}
+        margin: 0 auto;
+        height: 100%;
+        box-sizing: border-box; // Ensure padding and border are included in the total width and height
+    
+        @media (max-width: 1200px) {
+            max-width: 100%;
+            padding: 0 20px; // Add padding for smaller screens to avoid content touching the edges
+        }
+        
+        @media (max-width: 768px) {
+            padding: 0 10px; // Adjust padding for even smaller screens
+        }
+    }
+    
