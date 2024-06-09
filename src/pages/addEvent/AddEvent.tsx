@@ -32,7 +32,6 @@ const schema = yup.object().shape({
     .required('End date is required')
     .typeError('Invalid date')
     .min(yup.ref('startDate'), 'End date should be after start date'),
-  // header_image: yup.mixed().required('Header image is required'),
 });
 
 const AddEvent: React.FC = () => {
@@ -47,7 +46,7 @@ const AddEvent: React.FC = () => {
     tagline: '',
     details: '',
     registrationFee: '',
-    type: '',
+    type: 'Meetup',
     place: '',
     address: '',
     startDate: '',
@@ -60,10 +59,18 @@ const AddEvent: React.FC = () => {
 
   const [loader, setLoader] = useState(false);
 
+  const clearError = (fieldName: string) => {
+    // Clear error message for the specified field
+    // @ts-ignore
+    errors[fieldName] && delete errors[fieldName];
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    // @ts-ignore
     setValue(name, value);
+    clearError(name);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,11 +86,11 @@ const AddEvent: React.FC = () => {
   const handleEventTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFormData({ ...formData, type: e.target.value });
     setValue('type', e.target.value);
+    clearError('type');
   };
 
   const onSubmit = async (data: any) => {
     const formDataToSend = new FormData();
-    console.log(data)
 
     // Append all form fields
     formDataToSend.append('name', data.name);
@@ -100,7 +107,6 @@ const AddEvent: React.FC = () => {
 
     // Append files
     if (formData.header_image) {
-      console.log(formData)
       formDataToSend.append('header_image', formData.header_image);
     }
 
@@ -136,40 +142,43 @@ const AddEvent: React.FC = () => {
         <div className='add-event-form-section'>
           <h2>Basic Information</h2>
           <div className="input-group">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Event Name<sup>*</sup></label>
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
+              className={errors.name ? 'error' : ''}
               maxLength={100}
             />
-            {errors.name && <p className="error">{errors.name.message}</p>}
+            {errors.name && <p className="error-message">{errors.name.message}</p>}
           </div>
           <div className="input-group">
-            <label htmlFor="tagline">Tagline</label>
+            <label htmlFor="tagline">Event Tagline<sup>*</sup></label>
             <input
               type="text"
               name="tagline"
               value={formData.tagline}
               onChange={handleChange}
+              className={errors.tagline ? 'error' : ''}
               maxLength={100}
             />
-            {errors.tagline && <p className="error">{errors.tagline.message}</p>}
+            {errors.tagline && <p className="error-message">{errors.tagline.message}</p>}
           </div>
           <div className="input-group">
-            <label htmlFor="type">Event Type</label>
+            <label htmlFor="type">Event Type<sup>*</sup></label>
             <select
               name="type"
               value={formData.type}
               onChange={handleEventTypeChange}
+              className={errors.type ? 'error' : ''}
             >
-              <option value="">Select Event Type</option>
+              <option value="">Select Event Type<sup>*</sup></option>
               {eventTypes.map(eventType => (
                 <option key={eventType} value={eventType}>{eventType}</option>
               ))}
             </select>
-            {errors.type && <p className="error">{errors.type.message}</p>}
+            {errors.type && <p className="error-message">{errors.type.message}</p>}
           </div>
         </div>
 
@@ -177,97 +186,103 @@ const AddEvent: React.FC = () => {
           <h2>Event Details</h2>
           <div className="input-group">
             <RTE label="Details" name="details" control={control} defaultValue={getValues("details")} />
-            {errors.details && <p className="error">{errors.details.message}</p>}
+            {errors.details && <p className="error-message">{errors.details.message}</p>}
           </div>
           <div className="input-group">
-            <label htmlFor="registrationFee">Registration Fee</label>
+            <label htmlFor="registrationFee">Registration Fee(If Any)<sup>*</sup></label>
             <input
               type="number"
               name="registrationFee"
               value={formData.registrationFee}
               onChange={handleChange}
+              className={errors.registrationFee ? 'error' : ''}
               min={0}
             />
-            {errors.registrationFee && <p className="error">{errors.registrationFee.message}</p>}
+            {errors.registrationFee && <p className="error-message">{errors.registrationFee.message}</p>}
           </div>
         </div>
 
         <div className='add-event-form-section'>
           <h2>Location and Timing</h2>
           <div className="input-group">
-            <label htmlFor="place">Place</label>
+            <label htmlFor="place">Place<sup>*</sup></label>
             <input
               type="text"
               name="place"
               value={formData.place}
               onChange={handleChange}
+              className={errors.place ? 'error' : ''}
               maxLength={100}
             />
-            {errors.place && <p className="error">{errors.place.message}</p>}
+            {errors.place && <p className="error-message">{errors.place.message}</p>}
           </div>
           <div className="input-group">
-            <label htmlFor="address">Address</label>
+            <label htmlFor="address">Address<sup>*</sup></label>
             <input
               type="text"
               name="address"
               value={formData.address}
               onChange={handleChange}
+              className={errors.address ? 'error' : ''}
               maxLength={250}
             />
-            {errors.address && <p className="error">{errors.address.message}</p>}
+            {errors.address && <p className="error-message">{errors.address.message}</p>}
           </div>
           <div className="input-group">
-            <label htmlFor="registrationStartDate">Registration Start Date</label>
+            <label htmlFor="registrationStartDate">Registration Start Date<sup>*</sup></label>
             <input
               type="datetime-local"
               name="registrationStartDate"
               value={formData.registrationStartDate}
               onChange={handleChange}
+              className={errors.registrationStartDate ? 'error' : ''}
             />
-            {errors.registrationStartDate && <p className="error">{errors.registrationStartDate.message}</p>}
+            {errors.registrationStartDate && <p className="error-message">{errors.registrationStartDate.message}</p>}
           </div>
           <div className="input-group">
-            <label htmlFor="registrationEndDate">Registration End Date</label>
+            <label htmlFor="registrationEndDate">Registration End Date<sup>*</sup></label>
             <input
               type="datetime-local"
               name="registrationEndDate"
               value={formData.registrationEndDate}
               onChange={handleChange}
+              className={errors.registrationEndDate ? 'error' : ''}
             />
-            {errors.registrationEndDate && <p className="error">{errors.registrationEndDate.message}</p>}
+            {errors.registrationEndDate && <p className="error-message">{errors.registrationEndDate.message}</p>}
           </div>
           <div className="input-group">
-            <label htmlFor="startDate">Start Date</label>
+            <label htmlFor="startDate">Start Date<sup>*</sup></label>
             <input
               type="datetime-local"
               name="startDate"
               value={formData.startDate}
               onChange={handleChange}
+              className={errors.startDate ? 'error' : ''}
             />
-            {errors.startDate && <p className="error">{errors.startDate.message}</p>}
+            {errors.startDate && <p className="error-message">{errors.startDate.message}</p>}
           </div>
           <div className="input-group">
-            <label htmlFor="endDate">End Date</label>
+            <label htmlFor="endDate">End Date<sup>*</sup></label>
             <input
               type="datetime-local"
               name="endDate"
               value={formData.endDate}
               onChange={handleChange}
+              className={errors.endDate ? 'error' : ''}
             />
-            {errors.endDate && <p className="error">{errors.endDate.message}</p>}
+            {errors.endDate && <p className="error-message">{errors.endDate.message}</p>}
           </div>
         </div>
 
         <div className='add-event-form-section'>
           <h2>Images and Registration</h2>
           <div className="input-group">
-            <label htmlFor="header_image">Header Image</label>
+            <label htmlFor="header_image">Thumbnail Image<sup>*</sup></label>
             <input
               type="file"
               name="header_image"
               onChange={handleFileChange}
             />
-            {errors.header_image && <p className="error">{errors.header_image.message}</p>}
           </div>
           <div className="input-group">
             <label htmlFor="images">Other Images</label>

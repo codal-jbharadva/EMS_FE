@@ -71,7 +71,7 @@ const Footer: React.FC<FooterProps> = ({ data, startDate, updateRegistrationForm
                             </button>
                         </div>
                         <div>
-                            <button
+                            <button style={{padding:'20px', width:'fit-content'}}
                                 className={`footer-btn ${registrationStatus === "Register" ? "" : "completed"}`}
                                 onClick={registrationStatus === "Register" ? handleRegister : undefined}
                                 disabled={registrationStatus !== "Register"}

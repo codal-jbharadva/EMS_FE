@@ -1,69 +1,87 @@
 .add-event-form {
-    max-width: 50vw;
-    margin: 5vh auto;
-    padding: 2rem;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    background-color: #fff;
-  
-    .add-event-form-section {
-        // max-width: 400px;
-        margin: auto;
-        text-align: center;
-  
-      h2 {
-        margin-bottom: 5px;
-      }
-    }
-  
-    .input-group {
-      margin-bottom: 15px;
-  
-      label {
-        display: block;
-        text-align: start;
-        margin-bottom: 5px;
-      }
-  
-      input, select {
-        width: 100%;
-        padding: 10px 0px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 15px;
-      }
-    }
-  
-    .btn-div {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 15px;
-    }
-  
-    button {
-      width: 48%;
-      padding: 10px;
-      background-color: #F5167E;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: 700;
-  
-      &:hover {
-        background-color: #e6004c;
-      }
+  max-width: 50vw;
+  margin: 5vh auto;
+  padding: 2rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #fff;
+
+  .add-event-form-section {
+    // max-width: 400px;
+    margin: auto;
+    text-align: center;
+
+    h2 {
+      margin-bottom: 5px;
     }
   }
-  
-.header-add{
+
+  .input-group {
+    margin-bottom: 15px;
+
+    label {
+      display: block;
+      text-align: start;
+      margin-bottom: 5px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px 0px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 15px;
+    }
+
+    input.error,
+    select.error {
+      border-color: red;
+    }
+
+    .error-message {
+      color: red;
+      margin-top: 0.5rem;
+      text-align: start;
+    }
+  }
+
+  .btn-div {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    margin-top: 15px;
+  }
+
+  button {
+    width: 48%;
+    padding: 10px;
+    background-color: #F5167E;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+
+    &:hover {
+      background-color: #e6004c;
+    }
+  }
+
+  .form-error {
+    color: red;
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: bold;
+  }
 }
 
-.loader-icon{
+.header-add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader-icon {
   position: fixed;
   top: 0;
   left: 0;
@@ -74,4 +92,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+sup {
+  color: red;
+  padding-left: 2px;
+  font-size: 18px;
 }

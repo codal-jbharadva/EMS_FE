@@ -1,66 +1,78 @@
 .add-blog-form {
-    max-width: 60vw;
-    margin: 5vh auto;
-    padding: 2rem;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    background-color: #fff;
-  
-    .add-blog-form-section {
-      margin-bottom: 2rem;
-  
-      h2 {
-        margin-bottom: 1rem;
-        text-align: center;
+  max-width: 60vw;
+  margin: 5vh auto;
+  padding: 2rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #fff;
+
+  .add-blog-form-section {
+    margin-bottom: 2rem;
+
+    h2 {
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .input-group {
+      margin-bottom: 1rem;
+
+      label {
+        display: block;
+        text-align: start;
+        margin-bottom: 0.5rem;
       }
-  
-      .input-group {
-        margin-bottom: 1rem;
-  
-        label {
-          display: block;
-          text-align: start;
-          margin-bottom: 0.5rem;
-        }
-  
+
+      input[type="text"],
+      input[type="file"] {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 15px;
+      }
+
+      &.error {
         input[type="text"],
         input[type="file"] {
-          width: 100%;
-          padding: 0.5rem;
-          border: 1px solid #ddd;
-          border-radius: 5px;
-          font-size: 15px;
+          border-color: red;
         }
-  
-        button[type="submit"] {
-          width: 100%;
-          padding: 1rem;
-          background-color: #F5167E;
-          color: #fff;
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
-          font-size: 16px;
-          font-weight: 700;
-          transition: background-color 0.3s ease;
-  
-          &:hover {
-            background-color: #e6004c;
-          }
+
+        .error {
+          color: red;
+          margin-top: 0.5rem;
+        }
+      }
+
+      button[type="submit"] {
+        width: 100%;
+        padding: 1rem;
+        background-color: #F5167E;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 700;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #e6004c;
         }
       }
     }
-  
-    .header-add {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 40px;
-      line-height: 40px;
-      color: #242565;
-    }
   }
+
+  .header-add {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 40px;
+    color: #242565;
+  }
+
   .btnDiv{
     display: flex;
     justify-content: center;
@@ -75,10 +87,10 @@
       cursor: pointer;
       font-size: 16px;
       font-weight: 700;
-  
+
       &:hover {
         background-color: #e6004c;
       }
     }
   }
-  
+}
