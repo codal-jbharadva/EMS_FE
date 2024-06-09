@@ -1,4 +1,4 @@
-@mixin header-btn($colour,$border){
+@mixin header-btn($colour, $border) {
     width: 182px;
     height: 60px;
     border-radius: 50px;
@@ -6,21 +6,22 @@
     color: white;
     box-shadow: 0px 10px 50px 0px #3D37F140;
     border: solid $border 1.5px;
-    p{
-       font-weight: 400;
-       font-size: 18px;
-       line-height: 23px; 
-       text-align: center;
+
+    p {
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 23px;
+        text-align: center;
     }
 }
 
-.main-header{
+.main-header {
     width: 100%;
     height: 700px;
     background: linear-gradient(118.98deg, #ED4690 -2.11%, #5522CC 63.58%);
     color: white;
 
-    main{
+    main {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -29,35 +30,173 @@
         margin: auto;
         height: calc(100% - 60px);
 
-        .hero-image{
+        .hero-image {
             height: 100%;
             width: 80%;
-            img{
+
+            img {
                 object-fit: cover;
                 height: 80%;
                 width: 100%;
             }
         }
 
-        .content{
+        .content {
             text-align: center;
-            header{
+
+            header {
                 font-weight: 700;
                 font-size: 40px;
                 line-height: 40px;
             }
-            >p{
-                font-weight: 400px;
-                size: 18px;
+
+            >p {
+                font-weight: 400;
+                font-size: 18px;
                 line-height: 24px;
                 margin: 30px 0;
             }
-            .btn1{
+
+            .btn-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .btn1 {
                 @include header-btn(#F5167E, transparent);
                 margin-right: 20px;
+                display: flex;
+                justify-content: center;
+                align-items: center
             }
-            .btn2{
+
+            .btn2 {
                 @include header-btn(transparent, white);
+                display: flex;
+                justify-content: center;
+                align-items: center
+            }
+        }
+    }
+
+    // Media queries for responsiveness
+    @media (max-width: 1200px) {
+        height: 600px;
+
+        main {
+            flex-direction: column;
+            height: calc(100% - 40px);
+
+            .hero-image,
+            .content {
+                width: 100%;
+                margin: 0;
+            }
+
+            .hero-image {
+
+                img {
+                    height: 100%;
+                }
+            }
+
+            .content {
+                padding: 20px;
+
+                header {
+                    font-size: 35px;
+                    line-height: 35px;
+                }
+
+                >p {
+                    font-size: 16px;
+                    line-height: 22px;
+                    margin: 20px 0;
+                }
+
+                .btn1,
+                .btn2 {
+                    width: 160px;
+                    height: 50px;
+                    font-size: 16px;
+                    margin: 10px 0;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        height: 500px;
+
+        main {
+            padding: 10px;
+            gap: 1rem;
+
+            .hero-image {
+
+                img {
+                    height: 100%;
+                }
+            }
+
+            .content {
+                header {
+                    font-size: 30px;
+                    line-height: 30px;
+                }
+
+                >p {
+                    font-size: 15px;
+                    line-height: 20px;
+                    margin: 15px 0;
+                }
+
+                .btn1,
+                .btn2 {
+                    width: 140px;
+                    height: 45px;
+                    font-size: 14px;
+                    margin: 10px 0;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 480px) {
+        height: 400px;
+
+        main {
+            gap: 0.5rem;
+
+            .hero-image {
+
+                img {
+                    height: 100%;
+                }
+            }
+
+            .content {
+                padding: 10px;
+
+                header {
+                    font-size: 25px;
+                    line-height: 25px;
+                }
+
+                >p {
+                    font-size: 14px;
+                    line-height: 18px;
+                    margin: 10px 0;
+                }
+
+                .btn1,
+                .btn2 {
+                    width: 120px;
+                    height: 40px;
+                    font-size: 12px;
+                    margin: 5px 0;
+                }
             }
         }
     }

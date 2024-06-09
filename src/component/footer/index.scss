@@ -1,5 +1,4 @@
-
-@mixin header{
+@mixin header {
     font-family: DM Sans;
     font-size: 18px;
     font-weight: 700;
@@ -7,110 +6,158 @@
     text-align: left;
 }
 
-@mixin li{
+@mixin li {
     font-size: 14px;
     font-weight: 400;
     line-height: 28px;
     text-align: left;
 }
 
-.footer{
-    background: #0A075F;
-    // height: 20vh;
-    width: auto;
-    display: flex;
-    justify-content: space-evenly;
+.footer {
+    background: #0a075f;
+    padding: 5vh 5vw;
     color: white;
-    padding: 10vh 10vh;
-    // margin-top: 10vh;
-    .part1{
-        width: 335px;
-        header{
-            font-size: 28.5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .part1 {
+        width: 100%;
+        max-width: 400px;
+
+        header {
+            @include header();
+            font-size: 24px;
             font-weight: 800;
-            line-height: 34.71px;
-            text-align: left;
-            display: inline
         }
-        .contentbar{
+
+        .contentbar {
             margin: 10px 0;
             font-size: 14px;
             font-weight: 400;
             line-height: 22.4px;
-            text-align: left;
         }
-        svg{
+
+        svg {
             margin-right: 10px;
         }
     }
-    .part2{
-        header{
+
+    .part2,
+    .part3 {
+        width: 100%;
+        max-width: 200px;
+
+        header {
             @include header();
+            font-size: 20px;
+            font-weight: 800;
         }
-        ul{
-            li{
+
+        ul {
+            li {
                 @include li();
             }
         }
     }
-    .part3{
-        header{
+
+    .part4 {
+        width: 100%;
+        max-width: 400px;
+
+        header {
             @include header();
+            font-size: 20px;
+            font-weight: 800;
         }
-        ul{
-            li{
-                @include li();
-            }
-        }
-    }
-    .part4{
-        header{
-            @include header();
-        }
-        p{
+
+        p {
             font-size: 14px;
             font-weight: 400;
             line-height: 22.4px;
-            text-align: left;
         }
-        .input{
-            width: 365px;
-            height: 61px;
-            border-radius: 46px;
-            border: 2px solid #F1F1F1;
+
+        .input {
+            width: 100%;
             display: flex;
-            background-color: white;
-            input{
-                flex-grow: 1.5;
-                height: 100%;
-                border-radius: 46px 0 0 46px;
+            align-items: center;
+            /* Align items vertically */
+            margin-top: 10px;
+            /* Add some space between the paragraph and the input */
+
+            input {
+                flex-grow: 1;
+                height: 50px;
+                border-radius: 25px 0 0 25px;
+                border: 2px solid #f1f1f1;
                 outline: none;
-                border: 0px;
-                &::placeholder{
-                    font-size: 15px;
-                    font-weight: 400;
-                    line-height: 15.83px;
-                    text-align: left;
-                    margin-left: 30px;
-                }
-                
+                padding: 0 20px;
+                font-size: 16px;
+                /* Increase font size */
+                box-sizing: border-box;
+                /* Ensure padding and border are included in the width */
             }
-            .subbtn{
-                background-color: #F5167E;
+
+            input::placeholder {
+                font-size: 16px;
+                /* Increase placeholder font size */
+                opacity: 0.8;
+                /* Reduce opacity for placeholder text */
+            }
+
+            .subbtn {
+                background-color: #f5167e;
                 color: white;
-                width: 150px;
                 border: none;
-                box-shadow: 0px 10px 50px 0px #3D37F140;
-                border-radius: 50px;
-                margin:  7.6px 7.6px 7.6px 0;
-                p{
+                border-radius: 0 25px 25px 0;
+                cursor: pointer;
+                padding: 0 20px;
+                height: 50px;
+                margin-bottom: 5px;
+                transition: background-color 0.3s ease;
+
+                &:hover {
+                    background-color: #d40d6a;
+                    /* Darker color on hover */
+                }
+
+                p {
                     font-size: 15px;
                     font-weight: 400;
                     line-height: 15.83px;
                     letter-spacing: 0.065em;
                     text-align: center;
+                    margin: 0;
+                    /* Remove default margin */
                 }
             }
+        }
+
+    }
+}
+
+@media (max-width: 768px) {
+    .footer {
+        flex-direction: column;
+        align-items: center;
+
+        .part1,
+        .part4 {
+            text-align: center;
+        }
+
+        .part1,
+        .part2,
+        .part3,
+        .part4 {
+            max-width: none;
+        }
+
+        .part1,
+        .part2,
+        .part3,
+        .part4 {
+            margin-bottom: 30px;
         }
     }
 }

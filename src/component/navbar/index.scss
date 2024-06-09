@@ -1,107 +1,145 @@
+// Basic reset
+body,
+html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+// Parent container styling
 .parent {
     position: sticky;
     top: 0px;
-    background-color: transparent;
     background: linear-gradient(118.98deg, #ED4690 -2.11%, #5522CC 63.58%);
     height: 61px;
     z-index: 100;
+}
 
-    .navbar {
+// Navbar styling
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    position: sticky;
+    z-index: 20;
+
+    .leftpanel {
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        height: 100%;
-        width: 100%;
-        position: sticky;
-        z-index: 20;
+        cursor: pointer;
 
-        .leftpanel {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
+        .name {
+            padding-left: 10px;
+            font-weight: 800;
+            font-size: 30px;
+            line-height: 29px;
+            color: white;
 
-            .logo {
-                img {
-                    height: 41px;
-                    width: 150px;
-                }
-            }
-
-            .name {
-                padding-left: 10px;
-                font-weight: 800;
-                font-size: 30px;
-                line-height: 29px;
-                color: white;
-
-                .span {
-                    font-weight: 400;
-                }
+            .span {
+                font-weight: 400;
             }
         }
+    }
 
-        .centerpanel {
-            display: flex;
-            justify-content: space-between;
-            list-style-type: none;
-            align-items: center;
+    .centerpanel {
+        display: flex;
+        list-style-type: none;
+        align-items: center;
 
-            .link {
+        .link {
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 21px;
+            color: white;
+            text-decoration: none;
+            margin-right: 40px;
+            cursor: pointer;
+        }
+    }
+
+    .rightpanel {
+        display: flex;
+        align-items: center;
+
+        .linkbutton {
+            border-radius: 50px;
+            width: 102px;
+            height: 41px;
+            border: white 2px solid;
+            background-color: transparent;
+            color: white;
+            margin-left: 20px;
+            cursor: pointer;
+            transition: opacity 1s;
+
+            &:hover {
+                opacity: 0.8;
+            }
+
+            span {
+                padding: 20px;
                 font-weight: 500;
                 font-size: 16px;
                 line-height: 21px;
-                color: white;
-                text-decoration: none;
-                margin-right: 40px;
-                cursor: pointer;
             }
         }
 
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 40px;
+            height: 30px;
+            margin-left: 20px;
+            cursor: pointer;
+
+            .line {
+                width: 100%;
+                height: 4px;
+                background-color: #fff;
+                border-radius: 2px;
+                transition: transform 0.3s ease, opacity 0.3s ease;
+            }
+
+            &:hover .line {
+                background-color: white;
+            }
+        }
+    }
+
+    &.open .centerpanel {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 61px;
+        left: 0;
+        width: 100%;
+        background: linear-gradient(118.98deg, #ED4690 -2.11%, #5522CC 63.58%);
+        z-index: 10;
+
+        .link {
+            margin: 10px 0;
+        }
+    }
+}
+
+// Media query for responsive design
+@media (max-width: 768px) {
+    .navbar {
+        .centerpanel {
+            display: none;
+        }
+
         .rightpanel {
+            .hamburger-menu {
+                display: flex;
+            }
+        }
+
+        &.open .centerpanel {
             display: flex;
-            align-items: center;
-
-            .profile-dropdown {
-                .profile-icon {
-                    background-color: white;
-                    color: #007bff;
-                    border-radius: 50%;
-                    width: 40px;
-                    height: 40px;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    cursor: pointer;
-                    font-size: 16px;
-                }
-
-                .dropdown-menu {
-                    right: 0;
-                }
-            }
-
-            .linkbutton {
-                border-radius: 50px;
-                width: 102px;
-                height: 41px;
-                border: white 2px solid;
-                background-color: transparent;
-                color: white;
-                margin-left: 20px;
-                cursor: pointer;
-                transition: opacity 1s;
-
-                &:hover {
-                    opacity: 0.8;
-                }
-
-                span {
-                    padding: 20px;
-                    font-weight: 500;
-                    font-size: 16px;
-                    line-height: 21px;
-                }
-            }
         }
     }
 }
